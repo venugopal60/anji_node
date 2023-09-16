@@ -1,0 +1,22 @@
+{
+  "name": "file-script",
+  "version": "1.0.0",
+  "description": "To perform rest api integration and capture api response to json file and add unit tests ",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha test/"
+  },
+  "author": "Anji",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.3.8",
+    "mocha": "^10.2.0"
+  },
+  "dependencies": {
+    "assert": "^2.1.0",
+    "axios": "^1.5.0",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "sinon": "^16.0.0"
+  }
+}
