@@ -23,10 +23,9 @@ sh
 sh
 \(&nbsp;npm&nbsp;install<br></code><br><br>## Usage<br><br>To start the application, run the following command:<br><br><code>sh<br>\) node app.js
 
-4. Install dependencies:
-
+4. Test app
 sh
-\(&nbsp;npm&nbsp;install<br></code><br><br>## Usage<br><br>To test the application, run the following command:<br><br><code>sh<br>\) npm run test
+\(To test the application, run the following command:<br><br><code>sh<br>\) npm run test
 
 
 
