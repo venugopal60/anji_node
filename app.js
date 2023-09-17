@@ -54,8 +54,8 @@ async function getUniqueValueByKey(arr, key) {
 }
 
 async function licenseStates() {
-    const licenses = await readFileFromData('license_LO.json');
     try {
+        const licenses = await readFileFromData('license_LO.json');
         const states = await getUniqueValueByKey(JSON.parse(licenses), 'state');
         // console.log(states.sort());
         return states.sort();
@@ -64,6 +64,24 @@ async function licenseStates() {
         throw error;
     }
 }
+
+async function uniqueRankingTypeAndRank() {
+    try {
+        const loanOfficerFileData = await readFileFromData('loanOfficer_GetAll.json');
+        const loanOfficer = JSON.parse(loanOfficerFileData);
+        const uniqueRankingTypeAndRank = new Set();
+  
+        for (const {rankingType, rank} of loanOfficer?.badges) {
+          uniqueRankingTypeAndRank.add(JSON.stringify({rankingType, rank}));
+        }
+      
+        return Array.from(uniqueRankingTypeAndRank).map(str => JSON.parse(str));    
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+    
+  }
 
 async function runScript() {
     const filePath = 'api_response_data.json';
@@ -82,5 +100,5 @@ app.listen(port, () => {
     runScript();
 });
 module.exports = {
-    runScript, licenseStates
+    runScript, licenseStates, uniqueRankingTypeAndRank
 };

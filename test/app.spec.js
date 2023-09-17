@@ -2,9 +2,12 @@ const sinon = require('sinon');
 const assert = require('assert');
 const axios = require('axios');
 const fs = require('fs').promises;
-const { runScript, licenseStates } = require('./../app');
+const { runScript, licenseStates, uniqueRankingTypeAndRank } = require('./../app');
 const { licenses } = require('./tesdata/mocks/license_LO.json');
+const { loanOfficer } = require('./tesdata/mocks/loan_officer.json')
 const {states }= require('./tesdata/expected/states');
+const { rankingTypeAndRank} =require('./tesdata/expected/ranking_type_and_rank');
+
 const { expect } =  require('chai');
 
 describe('App()', () => {
@@ -81,13 +84,23 @@ describe('App()', () => {
   });
 
   describe('licenseStates()', () => {
-    it('Should run the script successfully', async () => {
+    it('Should get states successfully', async () => {
       fsReadFileStub.resolves(JSON.stringify(licenses));
-      const states = await licenseStates();
-      expect(states).to.be.eql(states);      
+      const result = await licenseStates();
+      expect(result).to.be.eql(states);      
       sinon.assert.calledOnce(fsReadFileStub);
       sinon.assert.calledWith(fsReadFileStub, 'license_LO.json', 'utf8');
     });
   });
+  
+  describe('uniqueRankingTypeAndRank()', () => {
+    it('Should get Unique Ranking Type and Rank successfully', async () => {
+      fsReadFileStub.resolves(JSON.stringify(loanOfficer));
+      const result = await uniqueRankingTypeAndRank();
+      expect(result).to.be.eql(rankingTypeAndRank);      
+      sinon.assert.calledOnce(fsReadFileStub);
+      sinon.assert.calledWith(fsReadFileStub, 'loanOfficer_GetAll.json', 'utf8');
+    });
+   });  
 });
 
