@@ -43,14 +43,35 @@ async function getDataFromApi(url) {
         throw error;
     }
 }
+async function getUniqueValueByKey(arr, key) {
+    try {
+        const uniqueValues = [...new Set(arr.map(item => item[key]))];
+        return uniqueValues;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
 
-async function runScript(){
+async function licenseStates() {
+    const licenses = await readFileFromData('license_LO.json');
+    try {
+        const states = await getUniqueValueByKey(JSON.parse(licenses), 'state');
+        // console.log(states.sort());
+        return states.sort();
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+async function runScript() {
     const filePath = 'api_response_data.json';
     const url = 'https://jsonplaceholder.typicode.com/posts';
     const apiResult = await getDataFromApi(url);
     await writeDataToFile(filePath, apiResult);
     const fileData = await readFileFromData(filePath);
-    console.info(JSON.parse(fileData));
+    // console.info(JSON.parse(fileData));
     return fileData
 }
 
@@ -61,5 +82,5 @@ app.listen(port, () => {
     runScript();
 });
 module.exports = {
-    runScript
-  };
+    runScript, licenseStates
+};
