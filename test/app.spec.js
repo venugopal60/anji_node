@@ -92,12 +92,17 @@ describe('App()', () => {
       sinon.assert.calledWith(fsReadFileStub, 'license_LO.json', 'utf8');
     });
   });
-  
+
   describe('uniqueRankingTypeAndRank()', () => {
     it('Should get Unique Ranking Type and Rank successfully', async () => {
       fsReadFileStub.resolves(JSON.stringify(loanOfficer));
       const result = await uniqueRankingTypeAndRank();
-      expect(result).to.be.eql(rankingTypeAndRank);      
+      expect(result).to.be.eql(rankingTypeAndRank); 
+      expect(result.uniqueRankingTypeAndRank[0].rankingType).to.be.eql('Top FHA Volume');  
+      expect(result.uniqueRankingTypeAndRank[1].rankingType).to.be.eql('Top Dollar Volume');
+      expect(result.uniqueRankingTypeAndRank[2].rankingType).to.be.eql('Most Loans Closed');
+      expect(result.uniqueRankingTypeAndRank[0].rank).to.be.eql(59);
+      expect(result.uniqueRankingTypeAndRank[1].rank).to.be.eql(1);
       sinon.assert.calledOnce(fsReadFileStub);
       sinon.assert.calledWith(fsReadFileStub, 'loanOfficer_GetAll.json', 'utf8');
     });

@@ -70,12 +70,21 @@ async function uniqueRankingTypeAndRank() {
         const loanOfficerFileData = await readFileFromData('loanOfficer_GetAll.json');
         const loanOfficer = JSON.parse(loanOfficerFileData);
         const uniqueRankingTypeAndRank = new Set();
+
+        const uniqueRankingType = new Set();
+        const uniqueRank = new Set();
   
         for (const {rankingType, rank} of loanOfficer?.badges) {
           uniqueRankingTypeAndRank.add(JSON.stringify({rankingType, rank}));
+          uniqueRankingType.add(rankingType);
+          uniqueRank.add(rank);
         }
       
-        return Array.from(uniqueRankingTypeAndRank).map(str => JSON.parse(str));    
+        return {
+            uniqueRankingTypeAndRank: Array.from(uniqueRankingTypeAndRank).map(str => JSON.parse(str)),
+            uniqueRankingType: Array.from(uniqueRankingType).sort(),
+            uniqueRank: Array.from(uniqueRank).sort()
+        }            
     } catch (error) {
         console.error(error);
         throw error;
